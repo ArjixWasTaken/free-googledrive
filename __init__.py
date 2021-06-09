@@ -1,43 +1,15 @@
-from abc import abstractclassmethod
-import requests
 import re
-from random import choice
+import sys
 
-from functools import lru_cache
+import requests
 
-URL = "https://www.pon.workers.dev/drive"
-PROXY_API = "https://www.proxy-list.download/api/v1/get?type=https&anon=elite"
+AUTODRIVE_BOT_API_URL = "https://www.pon.workers.dev/drive"
 
-
-@lru_cache()
-def fetch_proxies():
-    return requests.get(PROXY_API).text.splitlines()
-
-
-def create(email_address, storage_name, *, avoid_ratelimit=False):
-    if not re.match(r"[a-zA-Z\.0-9]+?\@gmail\.com", email_address):
-        print('The email address provided: {} appears to not be a valid gmail (non business) address.'.format(email_address))
-        answer = input('Are you sure you want to continue with this address? [Y]/N: ')
-
-        if answer.strip() == '':
-            pass
-        elif answer.strip().lower() == 'y':
-            pass
-        else:
-            print('Aborting...')
-            exit()
-    """
-    Just an API call to send a "Google Drive Shared Storage" to your Google account in seconds?
-    """
-    return requests.post(URL, json={
-        'emailAddress': email_address,
-        'teamDriveName': storage_name,
-        'teamDriveThemeId': 'random'
-    }, proxies={} if not avoid_ratelimit else {
-        'http': "http://%s/" % choice(fetch_proxies())
-    }).ok
-
+def create(email_address, storage_name):
+    """API call for free Google Drive Shared Drive generation."""
+    if not re.match(r"[\w.-]+@gmail\.com", email_address) and input("\"{}\" doesn't seem to be using the domain 'gmail.com', if the email is not a business email connected to a Google Drive, this process would fail. \nContinue? [y/N]: ".format(email_address)).lower().strip() == 'n':
+        return False
+    return requests.post(AUTODRIVE_BOT_API_URL, json={'emailAddress': email_address, 'teamDriveName': storage_name, 'teamDriveThemeId': 'random'}).ok
 
 if __name__ == '__main__':
-    import sys
-    create(*sys.argv[1:][:2], avoid_ratelimit=True)
+    create(*sys.argv[1:][:2])
