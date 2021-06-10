@@ -19,7 +19,7 @@ In the above command, you can replace the email and the drive name as you like.
 
 **This project is simply a client for someone else's services.**
 
-Any account termination cause due to this tool **won't be held accounted for.**
+Any account termination caused due to this tool **won't be held accounted for.**
 
 Moreover, the server side bot being abused by this tool may log your emails. Hence, **usage is at your own risk.** The open-sourced code from which the server side bot is based off of is [this.](https://github.com/ParveenBhadooOfficial/Create-Google-Shared-Drive/) The specific API used by this tool may have modifications.
 
