@@ -3,7 +3,7 @@ import sys
 
 import requests
 
-AUTODRIVE_BOT_API_URL = "https://www.pon.workers.dev/drive"
+AUTODRIVE_BOT_API_URL = "https://team.gdrive.vip/drive"
 
 def create(email_address, storage_name):
     """API call for free Google Drive Shared Drive generation."""
